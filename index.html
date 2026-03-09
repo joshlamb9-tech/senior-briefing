@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Senior Briefing — Mowden Hall School</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Arimo:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─────────────────────────────────────────────
+       RESET & BASE
+    ───────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green:      #00534c;
+      --crimson:    #81001C;
+      --gold:       #CFAD6B;
+      --sage:       #45645B;
+      --bg:         #f7f5f0;
+      --light-sage: #94A092;
+      --text:       #1a1a1a;
+      --card-bg:    #ffffff;
+      --border:     #e0dbd0;
+      --shadow:     0 2px 12px rgba(0,0,0,0.08);
+      --shadow-hover: 0 6px 24px rgba(0,0,0,0.14);
+      --radius:     10px;
+      --transition: 0.22s ease;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Arimo', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', Georgia, serif;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    /* ─────────────────────────────────────────────
+       ANIMATIONS
+    ───────────────────────────────────────────── */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.04); }
+    }
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-30px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    .fade-in-up  { animation: fadeInUp  0.5s ease both; }
+    .fade-in     { animation: fadeIn    0.5s ease both; }
+
+    /* staggered children */
+    .stagger > *:nth-child(1)  { animation-delay: 0.05s; }
+    .stagger > *:nth-child(2)  { animation-delay: 0.12s; }
+    .stagger > *:nth-child(3)  { animation-delay: 0.19s; }
+    .stagger > *:nth-child(4)  { animation-delay: 0.26s; }
+    .stagger > *:nth-child(5)  { animation-delay: 0.33s; }
+
+    /* ─────────────────────────────────────────────
+       LAYOUT HELPERS
+    ───────────────────────────────────────────── */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .section {
+      padding: 48px 0;
+    }
+
+    .section-title {
+      font-size: 1.7rem;
+      color: var(--green);
+      margin-bottom: 6px;
+      letter-spacing: 0.01em;
+    }
+
+    .section-rule {
+      border: none;
+      border-top: 3px solid var(--gold);
+      margin-bottom: 28px;
+      width: 60px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      transition: box-shadow var(--transition), transform var(--transition);
+    }
+    .card:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-2px);
+    }
+
+    /* ─────────────────────────────────────────────
+       1. HEADER / MASTHEAD
+    ───────────────────────────────────────────── */
+    .masthead {
+      background: var(--green);
+      color: #fff;
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .masthead::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          90deg,
+          rgba(207,173,107,0.06) 0px,
+          rgba(207,173,107,0.06) 1px,
+          transparent 1px,
+          transparent 80px
+        );
+      pointer-events: none;
+    }
+
+    .masthead-inner {
+      position: relative;
+      z-index: 1;
+      padding: 18px 20px 0;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .masthead-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .masthead-top-left,
+    .masthead-top-right {
+      font-size: 0.72rem;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-family: 'Arimo', sans-serif;
+      font-weight: 600;
+    }
+
+    .masthead-rule {
+      border: none;
+      border-top: 2px solid var(--gold);
+      margin-bottom: 10px;
+      opacity: 0.7;
+    }
+
+    .masthead-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2.4rem, 7vw, 5.2rem);
+      font-weight: 900;
+      letter-spacing: 0.03em;
+      text-align: center;
+      line-height: 1;
+      color: #fff;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    }
+
+    .masthead-subtitle {
+      text-align: center;
+      font-size: 0.8rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 6px;
+      font-weight: 600;
+    }
+
+    .masthead-date-bar {
+      background: var(--gold);
+      color: var(--green);
+      text-align: center;
+      font-weight: 700;
+      font-size: 0.82rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 7px 20px;
+      margin-top: 16px;
+    }
+
+    /* ─────────────────────────────────────────────
+       2. COUNTDOWN TIMERS
+    ───────────────────────────────────────────── */
+    .countdowns {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .countdown-card {
+      border-radius: var(--radius);
+      padding: 28px 20px 22px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      transition: transform var(--transition), box-shadow var(--transition);
+      cursor: default;
+    }
+    .countdown-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .countdown-card.ski  { background: var(--green); color: #fff; }
+    .countdown-card.french { background: var(--gold); color: #2a1f00; }
+    .countdown-card.ce   { background: var(--crimson); color: #fff; }
+
+    .countdown-number {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(3rem, 7vw, 4.5rem);
+      font-weight: 900;
+      line-height: 1;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .countdown-unit {
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 600;
+      opacity: 0.75;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .countdown-label {
+      font-size: 0.92rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .countdown-date {
+      font-size: 0.72rem;
+      opacity: 0.7;
+      letter-spacing: 0.06em;
+    }
+
+    /* ─────────────────────────────────────────────
+       3. WEEK AHEAD
+    ───────────────────────────────────────────── */
+    .week-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+
+    .day-card {
+      border-radius: var(--radius);
+      padding: 16px 14px;
+      background: var(--card-bg);
+      box-shadow: var(--shadow);
+      border-top: 4px solid var(--border);
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .day-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .day-card.today {
+      border-top-color: var(--green);
+      background: #f0f7f6;
+    }
+
+    .day-card.today .day-name {
+      color: var(--green);
+    }
+
+    .day-name {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--sage);
+    }
+
+    .day-card.today .day-badge {
+      display: inline-block;
+      background: var(--green);
+      color: #fff;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 3px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    .day-content {
+      font-size: 0.82rem;
+      color: #444;
+      line-height: 1.5;
+    }
+
+    /* ─────────────────────────────────────────────
+       4. DAILY KNOWLEDGE CHALLENGE
+    ───────────────────────────────────────────── */
+    .quiz-section {
+      background: var(--green);
+      color: #fff;
+      padding: 48px 0;
+    }
+
+    .quiz-section .section-title { color: #fff; }
+    .quiz-section .section-rule  { border-top-color: var(--gold); }
+
+    .quiz-wrapper {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(207,173,107,0.25);
+      border-radius: var(--radius);
+      padding: 30px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .quiz-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .quiz-progress {
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      font-weight: 600;
+    }
+
+    .quiz-streak {
+      background: var(--gold);
+      color: #2a1f00;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.05em;
+    }
+
+    .quiz-subject-badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 4px;
+      margin-bottom: 14px;
+      color: #fff;
+    }
+
+    .quiz-question {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 22px;
+      line-height: 1.45;
+      color: #fff;
+    }
+
+    .quiz-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .quiz-option {
+      background: rgba(255,255,255,0.1);
+      border: 1.5px solid rgba(255,255,255,0.2);
+      color: #fff;
+      border-radius: 8px;
+      padding: 13px 16px;
+      font-family: 'Arimo', sans-serif;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-align: left;
+      transition: background var(--transition), border-color var(--transition), transform var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .quiz-option:hover:not(:disabled) {
+      background: rgba(255,255,255,0.2);
+      border-color: var(--gold);
+      transform: translateX(3px);
+    }
+
+    .quiz-option .opt-letter {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.8rem;
+      flex-shrink: 0;
+    }
+
+    .quiz-option.correct {
+      background: rgba(0,180,100,0.3);
+      border-color: #00b464;
+    }
+    .quiz-option.wrong {
+      background: rgba(200,0,0,0.25);
+      border-color: #c00;
+    }
+    .quiz-option:disabled { cursor: default; }
+
+    .quiz-feedback {
+      min-height: 28px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      margin-bottom: 14px;
+      color: var(--gold);
+    }
+
+    .quiz-next-btn {
+      background: var(--gold);
+      color: #2a1f00;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 28px;
+      font-family: 'Arimo', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition);
+      display: none;
+    }
+    .quiz-next-btn:hover {
+      background: #e0c07a;
+      transform: translateY(-1px);
+    }
+    .quiz-next-btn.visible { display: inline-block; }
+
+    /* Results screen */
+    .quiz-results {
+      text-align: center;
+      display: none;
+    }
+    .quiz-results.visible { display: block; }
+
+    .quiz-score-circle {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 5px solid var(--gold);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+
+    .quiz-score-number {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 2.5rem;
+      font-weight: 900;
+      line-height: 1;
+      color: var(--gold);
+    }
+
+    .quiz-score-label {
+      font-size: 0.7rem;
+      opacity: 0.7;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .quiz-result-message {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.4rem;
+      margin-bottom: 8px;
+    }
+
+    .quiz-result-sub {
+      font-size: 0.88rem;
+      opacity: 0.75;
+      margin-bottom: 24px;
+    }
+
+    .quiz-restart-btn {
+      background: transparent;
+      color: var(--gold);
+      border: 2px solid var(--gold);
+      border-radius: 8px;
+      padding: 10px 24px;
+      font-family: 'Arimo', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background var(--transition), color var(--transition);
+    }
+    .quiz-restart-btn:hover {
+      background: var(--gold);
+      color: #2a1f00;
+    }
+
+    /* Progress bar */
+    .quiz-progress-bar-track {
+      background: rgba(255,255,255,0.12);
+      border-radius: 4px;
+      height: 5px;
+      margin-bottom: 22px;
+      overflow: hidden;
+    }
+    .quiz-progress-bar-fill {
+      height: 100%;
+      background: var(--gold);
+      border-radius: 4px;
+      transition: width 0.4s ease;
+    }
+
+    /* ─────────────────────────────────────────────
+       5. HOUSE POINTS
+    ───────────────────────────────────────────── */
+    .house-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .house-card {
+      border-radius: var(--radius);
+      padding: 24px 20px 20px;
+      background: var(--card-bg);
+      box-shadow: var(--shadow);
+      text-align: center;
+      transition: transform var(--transition), box-shadow var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .house-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .house-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 5px;
+      background: var(--green);
+    }
+
+    .house-form {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--green);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .house-points {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .house-points-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--light-sage);
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    .house-bar-track {
+      background: #eee;
+      border-radius: 4px;
+      height: 8px;
+      overflow: hidden;
+    }
+
+    .house-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--green), var(--sage));
+      border-radius: 4px;
+      transition: width 0.8s ease;
+    }
+
+    .house-star {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      font-size: 1.3rem;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    /* ─────────────────────────────────────────────
+       6. QUICK LINKS
+    ───────────────────────────────────────────── */
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .link-card {
+      border-radius: var(--radius);
+      padding: 20px 16px;
+      background: var(--card-bg);
+      box-shadow: var(--shadow);
+      text-align: center;
+      transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+    .link-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+      background: var(--green);
+      color: #fff;
+    }
+    .link-card:hover .link-icon { background: rgba(255,255,255,0.15); color: #fff; }
+    .link-card:hover .link-name { color: #fff; }
+    .link-card:hover .link-desc { color: rgba(255,255,255,0.75); }
+
+    .link-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: #f0f4f3;
+      color: var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      transition: background var(--transition), color var(--transition);
+      flex-shrink: 0;
+    }
+
+    .link-name {
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--text);
+      transition: color var(--transition);
+    }
+
+    .link-desc {
+      font-size: 0.72rem;
+      color: var(--light-sage);
+      transition: color var(--transition);
+    }
+
+    /* ─────────────────────────────────────────────
+       7. STUDENT SPOTLIGHT
+    ───────────────────────────────────────────── */
+    .spotlight-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .spotlight-card {
+      border-radius: var(--radius);
+      padding: 24px 20px;
+      background: var(--card-bg);
+      box-shadow: var(--shadow);
+      transition: transform var(--transition), box-shadow var(--transition);
+      border-left: 4px solid var(--gold);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .spotlight-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .spotlight-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 20px 0;
+      color: var(--light-sage);
+    }
+
+    .spotlight-placeholder-icon {
+      font-size: 2.5rem;
+      opacity: 0.4;
+    }
+
+    .spotlight-placeholder-text {
+      font-size: 0.82rem;
+      text-align: center;
+      opacity: 0.7;
+    }
+
+    .spotlight-category {
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .spotlight-submit {
+      text-align: center;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--green);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 13px 30px;
+      font-family: 'Arimo', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition);
+      text-decoration: none;
+      letter-spacing: 0.03em;
+    }
+    .btn-primary:hover {
+      background: var(--sage);
+      transform: translateY(-2px);
+    }
+
+    /* ─────────────────────────────────────────────
+       8. FOOTER
+    ───────────────────────────────────────────── */
+    .footer {
+      background: var(--green);
+      color: rgba(255,255,255,0.8);
+      padding: 32px 20px;
+      text-align: center;
+      margin-top: 0;
+    }
+
+    .footer-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 4px;
+      letter-spacing: 0.04em;
+    }
+
+    .footer-sub {
+      font-size: 0.8rem;
+      margin-bottom: 16px;
+      letter-spacing: 0.06em;
+    }
+
+    .footer-value {
+      display: inline-block;
+      background: rgba(207,173,107,0.2);
+      border: 1px solid rgba(207,173,107,0.4);
+      color: var(--gold);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+    }
+
+    .footer-value-label {
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.08em;
+      display: block;
+      margin-bottom: 14px;
+    }
+
+    .footer-credit {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.06em;
+    }
+
+    /* ─────────────────────────────────────────────
+       DIVIDER
+    ───────────────────────────────────────────── */
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0;
+    }
+
+    /* ─────────────────────────────────────────────
+       RESPONSIVE
+    ───────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .countdowns { grid-template-columns: 1fr; }
+      .week-grid  { grid-template-columns: 1fr 1fr; }
+      .house-grid { grid-template-columns: 1fr 1fr; }
+      .links-grid { grid-template-columns: 1fr 1fr; }
+      .spotlight-grid { grid-template-columns: 1fr 1fr; }
+      .quiz-options { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .section { padding: 32px 0; }
+      .week-grid { grid-template-columns: 1fr; }
+      .links-grid { grid-template-columns: 1fr 1fr; }
+      .spotlight-grid { grid-template-columns: 1fr; }
+      .house-grid { grid-template-columns: 1fr 1fr; }
+      .masthead-title { font-size: 2.2rem; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       1. MASTHEAD
+  ═══════════════════════════════════════════ -->
+  <header class="masthead">
+    <div class="masthead-inner fade-in">
+      <div class="masthead-top">
+        <span class="masthead-top-left">Est. 1934 · Stocksfield</span>
+        <span class="masthead-top-right" id="masthead-date">Monday 1 January 2026</span>
+      </div>
+      <hr class="masthead-rule" />
+      <h1 class="masthead-title">THE SENIOR BRIEFING</h1>
+      <p class="masthead-subtitle">Year 7 &amp; 8 &nbsp;·&nbsp; Mowden Hall School</p>
+    </div>
+    <div class="masthead-date-bar" id="masthead-date-bar">Loading…</div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════
+       2. COUNTDOWNS
+  ═══════════════════════════════════════════ -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title fade-in-up">Coming Up</h2>
+      <hr class="section-rule fade-in-up" />
+      <div class="countdowns stagger fade-in-up" id="countdowns">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- ═══════════════════════════════════════════
+       3. WEEK AHEAD
+  ═══════════════════════════════════════════ -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title fade-in-up">Week Ahead</h2>
+      <hr class="section-rule fade-in-up" />
+      <div class="week-grid stagger" id="week-grid">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- ═══════════════════════════════════════════
+       4. DAILY KNOWLEDGE CHALLENGE
+  ═══════════════════════════════════════════ -->
+  <section class="quiz-section">
+    <div class="container">
+      <h2 class="section-title fade-in-up">Daily Knowledge Challenge</h2>
+      <hr class="section-rule fade-in-up" />
+      <p style="font-size:0.85rem;opacity:0.65;margin-bottom:20px;margin-top:-16px;letter-spacing:0.04em;">
+        5 questions today — same for everyone. Build your streak!
+      </p>
+
+      <div class="quiz-wrapper fade-in-up">
+
+        <!-- Active question panel -->
+        <div id="quiz-panel">
+          <div class="quiz-meta">
+            <span class="quiz-progress" id="quiz-progress">Question 1 of 5</span>
+            <span class="quiz-streak" id="quiz-streak">🔥 Streak: 0</span>
+          </div>
+          <div class="quiz-progress-bar-track">
+            <div class="quiz-progress-bar-fill" id="quiz-bar" style="width:0%"></div>
+          </div>
+          <div id="quiz-subject-badge" class="quiz-subject-badge"></div>
+          <p class="quiz-question" id="quiz-question">Loading…</p>
+          <div class="quiz-options" id="quiz-options">
+            <!-- Populated by JS -->
+          </div>
+          <p class="quiz-feedback" id="quiz-feedback"></p>
+          <button class="quiz-next-btn" id="quiz-next">Next Question →</button>
+        </div>
+
+        <!-- Results panel -->
+        <div class="quiz-results" id="quiz-results">
+          <div class="quiz-score-circle">
+            <span class="quiz-score-number" id="results-score">0/5</span>
+            <span class="quiz-score-label">Score</span>
+          </div>
+          <h3 class="quiz-result-message" id="results-message">Well done!</h3>
+          <p class="quiz-result-sub" id="results-sub">Come back tomorrow for a new set.</p>
+          <button class="quiz-restart-btn" onclick="quizRestart()">Try Again</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       5. HOUSE POINTS
+  ═══════════════════════════════════════════ -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title fade-in-up">House Points by Form</h2>
+      <hr class="section-rule fade-in-up" />
+      <div class="house-grid stagger fade-in-up" id="house-grid">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- ═══════════════════════════════════════════
+       6. QUICK LINKS
+  ═══════════════════════════════════════════ -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title fade-in-up">Quick Links</h2>
+      <hr class="section-rule fade-in-up" />
+      <div class="links-grid stagger fade-in-up" id="links-grid">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- ═══════════════════════════════════════════
+       7. STUDENT SPOTLIGHT
+  ═══════════════════════════════════════════ -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title fade-in-up">Student Spotlight</h2>
+      <hr class="section-rule fade-in-up" />
+      <p style="color:var(--light-sage);font-size:0.85rem;margin-bottom:24px;margin-top:-16px;">
+        Celebrating great work, creativity, and effort across Year 7 &amp; 8.
+      </p>
+      <div class="spotlight-grid fade-in-up" id="spotlight-grid">
+        <!-- Populated by JS -->
+      </div>
+      <div class="spotlight-submit fade-in-up">
+        <a href="#" class="btn-primary">✦ Submit Your Work</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       8. FOOTER
+  ═══════════════════════════════════════════ -->
+  <footer class="footer">
+    <p class="footer-title">The Senior Briefing</p>
+    <p class="footer-sub">Mowden Hall School &nbsp;·&nbsp; For Year 7 &amp; 8 students</p>
+    <div class="footer-value" id="footer-value">Kind</div>
+    <span class="footer-value-label">Character Value of the Week</span>
+    <p class="footer-credit">Managed by Mr Lamb</p>
+  </footer>
+
+
+  <script>
+    /* ═══════════════════════════════════════════════════════════
+       ━━━ UPDATE WEEKLY: Week Ahead ━━━
+       Edit the text for each day below.
+       Leave "Normal timetable" if nothing special is happening.
+    ═══════════════════════════════════════════════════════════ */
+    const WEEK_AHEAD = {
+      monday:    "Year 8 Speaking Mock Exams begin — JL Classroom &amp; Clock Tower",
+      tuesday:   "Year 8 Speaking Mocks continue | 3J cover lesson",
+      wednesday: "Year 8 Speaking Mocks — final day | 8L, 6T cover lessons",
+      thursday:  "Normal timetable",
+      friday:    "Normal timetable"
+    };
+
+    /* ═══════════════════════════════════════════════════════════
+       ━━━ UPDATE WEEKLY: House Points ━━━
+       Update the points totals each week.
+    ═══════════════════════════════════════════════════════════ */
+    const HOUSE_POINTS = {
+      "7S": 142,
+      "7M": 138,
+      "8L": 156,
+      "8S": 149
+    };
+
+    /* ═══════════════════════════════════════════════════════════
+       ━━━ STATIC CONFIG: Countdowns ━━━
+       Dates are fixed — no need to change unless events change.
+    ═══════════════════════════════════════════════════════════ */
+    const COUNTDOWNS = [
+      {
+        label:    "Ski Trip to Montgenevre",
+        date:     "2026-03-28",
+        cssClass: "ski",
+        icon:     "⛷"
+      },
+      {
+        label:    "French Speaking &amp; Listening Exam",
+        date:     "2026-05-24",
+        cssClass: "french",
+        icon:     "🇫🇷"
+      },
+      {
+        label:    "CE Exam Week",
+        date:     "2026-06-06",
+        cssClass: "ce",
+        icon:     "📝"
+      }
+    ];
+
+    /* ═══════════════════════════════════════════════════════════
+       ━━━ STATIC CONFIG: Quick Links ━━━
+    ═══════════════════════════════════════════════════════════ */
+    const QUICK_LINKS = [
+      { name: "CE French Revision",   desc: "Vocab, grammar &amp; speaking prep",   icon: "🇫🇷", url: "https://joshlamb9-tech.github.io/y8-french-revision/" },
+      { name: "CE Latin Revision",    desc: "Grammar tables &amp; vocabulary",       icon: "🏛",  url: "https://joshlamb9-tech.github.io/ce-latin-revision/" },
+      { name: "CE Maths Revision",    desc: "Mental maths practice",                 icon: "🔢", url: "https://joshlamb9-tech.github.io/ce-mental-maths/" },
+      { name: "Google Classroom",     desc: "Homework &amp; class resources",        icon: "📚", url: "https://classroom.google.com" },
+      { name: "Gmail",                desc: "Your school email",                     icon: "✉️", url: "https://mail.google.com" },
+      { name: "School Website",       desc: "News &amp; information",                icon: "🏫", url: "https://www.mowdenhallpst.org" },
+      { name: "Wellbeing",            desc: "Support &amp; resources",               icon: "💚", url: "https://wellbeing.mowdenhall.co.uk" },
+      { name: "Report Bullying",      desc: "Speak up — we're listening",            icon: "🛡", url: "#" }
+    ];
+
+    /* ═══════════════════════════════════════════════════════════
+       ━━━ STATIC CONFIG: Character Values ━━━
+    ═══════════════════════════════════════════════════════════ */
+    const CHARACTER_VALUES = [
+      "Kind",
+      "Resilient",
+      "Independent Thinkers",
+      "Empathetic",
+      "Community",
+      "Communication",
+      "Honest"
+    ];
+
+    /* ═══════════════════════════════════════════════════════════
+       ━━━ STATIC CONFIG: Question Bank (80+ questions) ━━━
+       format: { subject, q, options: [A,B,C,D], answer (0-indexed) }
+    ═══════════════════════════════════════════════════════════ */
+    const SUBJECT_COLOURS = {
+      "English":    "#00534c",
+      "Maths":      "#81001C",
+      "Science":    "#1a5276",
+      "French":     "#7d6608",
+      "History":    "#784212",
+      "Geography":  "#1a5276",
+      "RS":         "#4a235a",
+      "Latin":      "#2e4053",
+      "Computing":  "#1a3a4a"
+    };
+
+    const QUESTION_BANK = [
+      /* ── ENGLISH ── */
+      { subject: "English", q: "What literary device repeats the same consonant sound at the start of words?", options: ["Alliteration", "Assonance", "Metaphor", "Simile"], answer: 0 },
+      { subject: "English", q: "Who wrote 'A Midsummer Night's Dream'?", options: ["Dickens", "Austen", "Shakespeare", "Keats"], answer: 2 },
+      { subject: "English", q: "What is an 'iambic pentameter'?", options: ["A type of rhyme", "A line of 10 syllables with alternating stress", "A metaphor using animals", "A 14-line poem"], answer: 1 },
+      { subject: "English", q: "What is a 'protagonist'?", options: ["The villain", "The narrator", "The main character", "A minor character"], answer: 2 },
+      { subject: "English", q: "What is a 'soliloquy'?", options: ["A duet", "A speech where a character speaks their thoughts aloud", "A type of poem", "A stage direction"], answer: 1 },
+      { subject: "English", q: "What is the difference between a simile and a metaphor?", options: ["There is no difference", "Simile uses 'like' or 'as'", "Metaphor uses 'like' or 'as'", "Simile is always longer"], answer: 1 },
+      { subject: "English", q: "What is an 'omniscient narrator'?", options: ["A narrator who is a character", "A narrator who knows everything", "A narrator in first person", "An unreliable narrator"], answer: 1 },
+      { subject: "English", q: "In grammar, what is a 'subordinate clause'?", options: ["The main sentence", "A clause that cannot stand alone", "A type of noun", "A connecting word"], answer: 1 },
+
+      /* ── MATHS ── */
+      { subject: "Maths", q: "What is 15% of 80?", options: ["10", "12", "14", "15"], answer: 1 },
+      { subject: "Maths", q: "What is the area of a triangle with base 8 cm and height 5 cm?", options: ["40 cm²", "13 cm²", "20 cm²", "80 cm²"], answer: 2 },
+      { subject: "Maths", q: "What is the value of x if 3x + 7 = 22?", options: ["3", "4", "5", "6"], answer: 2 },
+      { subject: "Maths", q: "What is the square root of 144?", options: ["11", "12", "13", "14"], answer: 1 },
+      { subject: "Maths", q: "What is 2³ (2 to the power of 3)?", options: ["6", "8", "9", "16"], answer: 1 },
+      { subject: "Maths", q: "If a rectangle has perimeter 36 cm and width 8 cm, what is its length?", options: ["9 cm", "10 cm", "11 cm", "20 cm"], answer: 1 },
+      { subject: "Maths", q: "What is 3/4 expressed as a percentage?", options: ["34%", "70%", "75%", "80%"], answer: 2 },
+      { subject: "Maths", q: "What is the interior angle sum of a triangle?", options: ["90°", "180°", "270°", "360°"], answer: 1 },
+      { subject: "Maths", q: "Simplify the ratio 24:36.", options: ["4:6", "2:3", "8:12", "12:18"], answer: 1 },
+      { subject: "Maths", q: "What is 0.375 as a fraction in its simplest form?", options: ["1/4", "3/8", "3/4", "7/16"], answer: 1 },
+
+      /* ── SCIENCE ── */
+      { subject: "Science", q: "What is the powerhouse of the cell?", options: ["Nucleus", "Mitochondria", "Cell membrane", "Ribosome"], answer: 1 },
+      { subject: "Science", q: "What does photosynthesis produce?", options: ["Carbon dioxide and water", "Glucose and oxygen", "Glucose and nitrogen", "Oxygen only"], answer: 1 },
+      { subject: "Science", q: "What is the chemical symbol for gold?", options: ["Go", "Gd", "Au", "Ag"], answer: 2 },
+      { subject: "Science", q: "What is the chemical formula for water?", options: ["HO", "H₂O", "OH", "H₂O₂"], answer: 1 },
+      { subject: "Science", q: "What force keeps planets in orbit around the Sun?", options: ["Magnetism", "Friction", "Gravity", "Electrostatic force"], answer: 2 },
+      { subject: "Science", q: "What is the speed of light?", options: ["30,000 km/s", "300,000 km/s", "3,000,000 km/s", "3,000 km/s"], answer: 1 },
+      { subject: "Science", q: "What type of rock is formed from cooled magma?", options: ["Sedimentary", "Metamorphic", "Igneous", "Limestone"], answer: 2 },
+      { subject: "Science", q: "What is the largest organ in the human body?", options: ["Liver", "Brain", "Lungs", "Skin"], answer: 3 },
+      { subject: "Science", q: "What gas do plants absorb during photosynthesis?", options: ["Oxygen", "Nitrogen", "Carbon dioxide", "Hydrogen"], answer: 2 },
+      { subject: "Science", q: "What is the nucleus of an atom made of?", options: ["Electrons and protons", "Protons and neutrons", "Neutrons only", "Electrons only"], answer: 1 },
+      { subject: "Science", q: "What does DNA stand for?", options: ["Deoxyribonucleic acid", "Dynamic nuclear activity", "Dual nitrogen arrangement", "Digital nucleic acid"], answer: 0 },
+      { subject: "Science", q: "What is Newton's first law of motion?", options: ["Force equals mass times acceleration", "For every action there is an equal reaction", "An object stays at rest or in motion unless acted on by a force", "Energy cannot be created or destroyed"], answer: 2 },
+
+      /* ── FRENCH ── */
+      { subject: "French", q: "What does 'Je m'appelle' mean?", options: ["I am", "My name is", "I live", "I like"], answer: 1 },
+      { subject: "French", q: "What is 'maison' in English?", options: ["Car", "School", "House", "Garden"], answer: 2 },
+      { subject: "French", q: "How do you say 'I am hungry' in French?", options: ["J'ai soif", "J'ai faim", "Je suis fatigué", "J'ai chaud"], answer: 1 },
+      { subject: "French", q: "What is the plural of 'un chat'?", options: ["des chat", "les chats", "des chats", "un chats"], answer: 2 },
+      { subject: "French", q: "What does 'Quelle heure est-il?' mean?", options: ["What day is it?", "What time is it?", "Where are you?", "How are you?"], answer: 1 },
+      { subject: "French", q: "What is 'rouge' in English?", options: ["Blue", "Green", "Yellow", "Red"], answer: 3 },
+      { subject: "French", q: "How do you say 'I would like' in French?", options: ["Je veux", "Je voudrais", "Je mange", "J'aime"], answer: 1 },
+      { subject: "French", q: "What is the French word for 'school'?", options: ["école", "maison", "ville", "rue"], answer: 0 },
+
+      /* ── HISTORY ── */
+      { subject: "History", q: "In what year did World War One begin?", options: ["1912", "1914", "1916", "1918"], answer: 1 },
+      { subject: "History", q: "Who was the first Tudor monarch?", options: ["Henry VIII", "Henry VII", "Edward VI", "Mary I"], answer: 1 },
+      { subject: "History", q: "What year was the Magna Carta signed?", options: ["1066", "1215", "1348", "1415"], answer: 1 },
+      { subject: "History", q: "Which Roman leader invaded Britain in 55 BC?", options: ["Augustus", "Nero", "Julius Caesar", "Hadrian"], answer: 2 },
+      { subject: "History", q: "What was the name of the plague that killed a third of Europe's population in the 14th century?", options: ["The Red Plague", "The Black Death", "The Great Sickness", "The Dark Plague"], answer: 1 },
+      { subject: "History", q: "In what year did World War Two end?", options: ["1943", "1944", "1945", "1946"], answer: 2 },
+      { subject: "History", q: "Who was the British Prime Minister during most of World War Two?", options: ["Neville Chamberlain", "Clement Attlee", "Winston Churchill", "Anthony Eden"], answer: 2 },
+      { subject: "History", q: "What was the name of Henry VIII's first wife?", options: ["Anne Boleyn", "Catherine Howard", "Catherine of Aragon", "Jane Seymour"], answer: 2 },
+
+      /* ── GEOGRAPHY ── */
+      { subject: "Geography", q: "What is the longest river in the world?", options: ["The Amazon", "The Nile", "The Mississippi", "The Yangtze"], answer: 1 },
+      { subject: "Geography", q: "What is the capital of Australia?", options: ["Sydney", "Melbourne", "Brisbane", "Canberra"], answer: 3 },
+      { subject: "Geography", q: "How many continents are there?", options: ["5", "6", "7", "8"], answer: 2 },
+      { subject: "Geography", q: "What is the name of the tectonic plate on which the UK sits?", options: ["North American Plate", "African Plate", "Eurasian Plate", "Indo-Australian Plate"], answer: 2 },
+      { subject: "Geography", q: "What is the River Tyne's source?", options: ["The Lake District", "The Pennines", "The Cheviots", "The Yorkshire Dales"], answer: 1 },
+      { subject: "Geography", q: "What type of rainfall occurs when moist air rises over mountains?", options: ["Convectional", "Frontal", "Relief", "Tropical"], answer: 2 },
+      { subject: "Geography", q: "What is the driest desert in the world?", options: ["The Sahara", "The Gobi", "The Atacama", "The Arabian"], answer: 2 },
+      { subject: "Geography", q: "What ocean lies between Europe and America?", options: ["The Pacific", "The Indian", "The Atlantic", "The Arctic"], answer: 2 },
+
+      /* ── RS ── */
+      { subject: "RS", q: "What is the holy book of Islam called?", options: ["The Bible", "The Torah", "The Qur'an", "The Vedas"], answer: 2 },
+      { subject: "RS", q: "In Christianity, what event does Easter celebrate?", options: ["The birth of Jesus", "The crucifixion of Jesus", "The resurrection of Jesus", "The baptism of Jesus"], answer: 2 },
+      { subject: "RS", q: "What are the Four Noble Truths central to?", options: ["Hinduism", "Islam", "Judaism", "Buddhism"], answer: 3 },
+      { subject: "RS", q: "What is the Jewish day of rest called?", options: ["Shabbat", "Eid", "Diwali", "Passover"], answer: 0 },
+      { subject: "RS", q: "Who was the founder of Sikhism?", options: ["Guru Gobind Singh", "Guru Nanak", "Guru Granth Sahib", "Guru Arjan"], answer: 1 },
+      { subject: "RS", q: "What does 'karma' mean in Hinduism?", options: ["The cycle of rebirth", "The law of cause and effect", "The state of enlightenment", "The path to heaven"], answer: 1 },
+
+      /* ── LATIN ── */
+      { subject: "Latin", q: "What does 'aqua' mean?", options: ["Fire", "Earth", "Water", "Air"], answer: 2 },
+      { subject: "Latin", q: "What does 'terra' mean?", options: ["Sea", "Sky", "Earth/land", "Fire"], answer: 2 },
+      { subject: "Latin", q: "What does 'magnus' mean?", options: ["Small", "Great/large", "Old", "New"], answer: 1 },
+      { subject: "Latin", q: "What does 'bene' mean?", options: ["Badly", "Quickly", "Well/good", "Slowly"], answer: 2 },
+      { subject: "Latin", q: "What case in Latin is used for the subject of a sentence?", options: ["Accusative", "Genitive", "Nominative", "Dative"], answer: 2 },
+      { subject: "Latin", q: "What does 'veni, vidi, vici' mean?", options: ["I came, I saw, I left", "I came, I saw, I conquered", "I fought, I won, I left", "I marched, I saw, I won"], answer: 1 },
+      { subject: "Latin", q: "What does 'puer' mean?", options: ["Girl", "Teacher", "Boy", "Father"], answer: 2 },
+      { subject: "Latin", q: "What does 'puella' mean?", options: ["Girl", "Woman", "Teacher", "Mother"], answer: 0 },
+
+      /* ── COMPUTING ── */
+      { subject: "Computing", q: "What does 'CPU' stand for?", options: ["Central Program Unit", "Computer Processing Unit", "Central Processing Unit", "Core Processing Utility"], answer: 2 },
+      { subject: "Computing", q: "What is binary code?", options: ["A type of virus", "A number system using only 0s and 1s", "An encryption method", "A programming language"], answer: 1 },
+      { subject: "Computing", q: "What does 'URL' stand for?", options: ["Universal Resource Link", "Uniform Resource Locator", "Unique Reference Location", "Universal Remote Login"], answer: 1 },
+      { subject: "Computing", q: "What is an algorithm?", options: ["A type of virus", "A set of step-by-step instructions to solve a problem", "A programming language", "A type of database"], answer: 1 },
+      { subject: "Computing", q: "What does 'HTML' stand for?", options: ["High Tech Markup Language", "HyperText Markup Language", "HyperTransfer Media Language", "High Transfer Markup Layout"], answer: 1 },
+      { subject: "Computing", q: "What is 'phishing'?", options: ["A type of computer virus", "Tricking someone into revealing personal information online", "Illegal file sharing", "A type of spam email"], answer: 1 },
+      { subject: "Computing", q: "What does 'RAM' stand for?", options: ["Read Access Memory", "Random Access Memory", "Remote Access Module", "Read And Modify"], answer: 1 },
+      { subject: "Computing", q: "In computing, what is a 'boolean'?", options: ["A type of loop", "A data type that is either true or false", "A programming error", "A type of variable name"], answer: 1 },
+
+      /* ── MIXED / EXTRA ── */
+      { subject: "Science", q: "What is the boiling point of water in Celsius?", options: ["90°C", "95°C", "100°C", "110°C"], answer: 2 },
+      { subject: "Maths", q: "How many sides does a hexagon have?", options: ["5", "6", "7", "8"], answer: 1 },
+      { subject: "Science", q: "What is the largest planet in our solar system?", options: ["Saturn", "Neptune", "Jupiter", "Uranus"], answer: 2 },
+      { subject: "Science", q: "What is the chemical symbol for iron?", options: ["Ir", "In", "Fe", "Io"], answer: 2 }
+    ];
+
+    /* ═══════════════════════════════════════════════════════════
+       UTILITY FUNCTIONS
+    ═══════════════════════════════════════════════════════════ */
+
+    /** Seeded pseudo-random number generator (Mulberry32) */
+    function mulberry32(seed) {
+      return function() {
+        seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+        let t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+        t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+        return ((t ^ t >>> 14) >>> 0) / 4294967296;
+      };
+    }
+
+    /** Shuffle array with seeded RNG */
+    function seededShuffle(arr, seed) {
+      const rng   = mulberry32(seed);
+      const copy  = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(rng() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    /** Date seed: integer like 20260309 */
+    function dateSeed() {
+      const d = new Date();
+      return d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+    }
+
+    /** Days between today and a target date string 'YYYY-MM-DD' */
+    function daysUntil(dateStr) {
+      const today  = new Date();
+      today.setHours(0, 0, 0, 0);
+      const target = new Date(dateStr + "T00:00:00");
+      const diff   = Math.ceil((target - today) / (1000 * 60 * 60 * 24));
+      return diff;
+    }
+
+    /** Format a date nicely */
+    function formatDate(d) {
+      const days   = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+      const months = ["January","February","March","April","May","June",
+                      "July","August","September","October","November","December"];
+      return `${days[d.getDay()]} ${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+    }
+
+    function formatDateShort(dateStr) {
+      const d = new Date(dateStr + "T00:00:00");
+      const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+      return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       SECTION 1: DATE
+    ═══════════════════════════════════════════════════════════ */
+    (function initDate() {
+      const now       = new Date();
+      const formatted = formatDate(now);
+      document.getElementById("masthead-date").textContent = formatted;
+      document.getElementById("masthead-date-bar").textContent =
+        `Edition: ${formatted}  ·  Year 7 & 8 Daily Briefing`;
+    })();
+
+    /* ═══════════════════════════════════════════════════════════
+       SECTION 2: COUNTDOWNS
+    ═══════════════════════════════════════════════════════════ */
+    (function initCountdowns() {
+      const container = document.getElementById("countdowns");
+      COUNTDOWNS.forEach(item => {
+        const days = daysUntil(item.date);
+        const label = days < 0 ? "passed" : days === 0 ? "Today!" : "days to go";
+        const num   = days < 0 ? "✓" : days === 0 ? "0" : days;
+
+        const card = document.createElement("div");
+        card.className = `countdown-card ${item.cssClass} fade-in-up`;
+        card.innerHTML = `
+          <span class="countdown-number">${num}</span>
+          <span class="countdown-unit">${label}</span>
+          <span class="countdown-label">${item.icon} ${item.label}</span>
+          <span class="countdown-date">${formatDateShort(item.date)}</span>
+        `;
+        container.appendChild(card);
+      });
+    })();
+
+    /* ═══════════════════════════════════════════════════════════
+       SECTION 3: WEEK AHEAD
+    ═══════════════════════════════════════════════════════════ */
+    (function initWeekAhead() {
+      const DAY_KEYS  = ["monday","tuesday","wednesday","thursday","friday"];
+      const DAY_NAMES = ["Monday","Tuesday","Wednesday","Thursday","Friday"];
+      const todayIdx  = new Date().getDay(); // 0=Sun, 1=Mon…
+      const grid      = document.getElementById("week-grid");
+
+      DAY_KEYS.forEach((key, i) => {
+        const isToday = (todayIdx === i + 1);
+        const card    = document.createElement("div");
+        card.className = "day-card fade-in-up" + (isToday ? " today" : "");
+        card.innerHTML = `
+          <div class="day-name">
+            ${DAY_NAMES[i]}${isToday ? '<span class="day-badge">Today</span>' : ''}
+          </div>
+          <div class="day-content">${WEEK_AHEAD[key]}</div>
+        `;
+        grid.appendChild(card);
+      });
+    })();
+
+    /* ═══════════════════════════════════════════════════════════
+       SECTION 4: DAILY KNOWLEDGE CHALLENGE
+    ═══════════════════════════════════════════════════════════ */
+    let quizQuestions   = [];
+    let quizCurrent     = 0;
+    let quizScore       = 0;
+    let quizAnswered    = false;
+
+    function getStreak() {
+      return parseInt(localStorage.getItem("sb_streak") || "0", 10);
+    }
+
+    function setStreak(n) {
+      localStorage.setItem("sb_streak", String(n));
+    }
+
+    function getLastQuizDate() {
+      return localStorage.getItem("sb_last_quiz_date") || "";
+    }
+
+    function setLastQuizDate(d) {
+      localStorage.setItem("sb_last_quiz_date", d);
+    }
+
+    function todayString() {
+      const d = new Date();
+      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    }
+
+    function initQuiz() {
+      const seed      = dateSeed();
+      const shuffled  = seededShuffle(QUESTION_BANK, seed);
+      quizQuestions   = shuffled.slice(0, 5);
+      quizCurrent     = 0;
+      quizScore       = 0;
+      quizAnswered    = false;
+
+      document.getElementById("quiz-panel").style.display   = "";
+      document.getElementById("quiz-results").classList.remove("visible");
+
+      updateStreakDisplay();
+      renderQuestion();
+    }
+
+    function updateStreakDisplay() {
+      document.getElementById("quiz-streak").textContent = `🔥 Streak: ${getStreak()}`;
+    }
+
+    function renderQuestion() {
+      const q      = quizQuestions[quizCurrent];
+      const total  = quizQuestions.length;
+      quizAnswered = false;
+
+      document.getElementById("quiz-progress").textContent =
+        `Question ${quizCurrent + 1} of ${total}`;
+
+      const pct = (quizCurrent / total) * 100;
+      document.getElementById("quiz-bar").style.width = pct + "%";
+
+      const badge    = document.getElementById("quiz-subject-badge");
+      badge.textContent = q.subject;
+      badge.style.background = SUBJECT_COLOURS[q.subject] || "#333";
+
+      document.getElementById("quiz-question").textContent = q.q;
+      document.getElementById("quiz-feedback").textContent = "";
+
+      const optContainer = document.getElementById("quiz-options");
+      optContainer.innerHTML = "";
+      const letters = ["A","B","C","D"];
+
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement("button");
+        btn.className = "quiz-option";
+        btn.innerHTML = `<span class="opt-letter">${letters[idx]}</span> ${opt}`;
+        btn.addEventListener("click", () => handleAnswer(idx, btn, q));
+        optContainer.appendChild(btn);
+      });
+
+      document.getElementById("quiz-next").classList.remove("visible");
+    }
+
+    function handleAnswer(chosen, btn, q) {
+      if (quizAnswered) return;
+      quizAnswered = true;
+
+      const opts = document.querySelectorAll(".quiz-option");
+      opts.forEach(b => b.disabled = true);
+
+      if (chosen === q.answer) {
+        btn.classList.add("correct");
+        document.getElementById("quiz-feedback").textContent = "✓ Correct! Well done.";
+        quizScore++;
+      } else {
+        btn.classList.add("wrong");
+        opts[q.answer].classList.add("correct");
+        document.getElementById("quiz-feedback").textContent =
+          `✗ The answer was: ${q.options[q.answer]}`;
+      }
+
+      const nextBtn = document.getElementById("quiz-next");
+      if (quizCurrent < quizQuestions.length - 1) {
+        nextBtn.textContent = "Next Question →";
+      } else {
+        nextBtn.textContent = "See Results →";
+      }
+      nextBtn.classList.add("visible");
+    }
+
+    document.getElementById("quiz-next").addEventListener("click", () => {
+      quizCurrent++;
+      if (quizCurrent < quizQuestions.length) {
+        renderQuestion();
+      } else {
+        showResults();
+      }
+    });
+
+    function showResults() {
+      document.getElementById("quiz-bar").style.width = "100%";
+      document.getElementById("quiz-panel").style.display = "none";
+
+      const resultsEl = document.getElementById("quiz-results");
+      resultsEl.classList.add("visible");
+
+      document.getElementById("results-score").textContent = `${quizScore}/5`;
+
+      const today = todayString();
+      const last  = getLastQuizDate();
+      let streak  = getStreak();
+
+      if (last !== today) {
+        // First completion today
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+        const yStr = `${yesterday.getFullYear()}-${String(yesterday.getMonth()+1).padStart(2,'0')}-${String(yesterday.getDate()).padStart(2,'0')}`;
+        if (last === yStr) {
+          streak++;
+        } else if (last === "") {
+          streak = 1;
+        } else {
+          streak = 1; // broke the streak
+        }
+        setStreak(streak);
+        setLastQuizDate(today);
+        updateStreakDisplay();
+      }
+
+      const pct = quizScore / 5;
+      let msg, sub;
+      if (pct === 1)       { msg = "Perfect score! Outstanding!"; sub = "A flawless performance — Mr Lamb would be proud."; }
+      else if (pct >= 0.8) { msg = "Excellent work!";             sub = "Really strong — keep that momentum going."; }
+      else if (pct >= 0.6) { msg = "Good effort!";                sub = "Solid — review the ones you missed and try again."; }
+      else if (pct >= 0.4) { msg = "Keep practising!";            sub = "A few more sessions and you'll nail it."; }
+      else                  { msg = "Don't give up!";              sub = "Everyone starts somewhere — come back tomorrow."; }
+
+      document.getElementById("results-message").textContent = msg;
+      document.getElementById("results-sub").textContent = `${sub} 🔥 Streak: ${getStreak()}`;
+    }
+
+    function quizRestart() {
+      initQuiz();
+    }
+
+    initQuiz();
+
+    /* ═══════════════════════════════════════════════════════════
+       SECTION 5: HOUSE POINTS
+    ═══════════════════════════════════════════════════════════ */
+    (function initHousePoints() {
+      const grid   = document.getElementById("house-grid");
+      const max    = Math.max(...Object.values(HOUSE_POINTS));
+      const winner = Object.entries(HOUSE_POINTS).find(([,v]) => v === max)[0];
+
+      Object.entries(HOUSE_POINTS).forEach(([form, pts]) => {
+        const pct  = Math.round((pts / max) * 100);
+        const card = document.createElement("div");
+        card.className = "house-card fade-in-up";
+        card.innerHTML = `
+          ${form === winner ? '<span class="house-star">⭐</span>' : ''}
+          <div class="house-form">${form}</div>
+          <div class="house-points">${pts}</div>
+          <div class="house-points-label">Points</div>
+          <div class="house-bar-track">
+            <div class="house-bar-fill" style="width:${pct}%"></div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    })();
+
+    /* ═══════════════════════════════════════════════════════════
+       SECTION 6: QUICK LINKS
+    ═══════════════════════════════════════════════════════════ */
+    (function initLinks() {
+      const grid = document.getElementById("links-grid");
+      QUICK_LINKS.forEach(link => {
+        const card = document.createElement("a");
+        card.className = "link-card fade-in-up";
+        card.href      = link.url;
+        card.target    = link.url === "#" ? "_self" : "_blank";
+        card.rel       = "noopener noreferrer";
+        card.innerHTML = `
+          <div class="link-icon">${link.icon}</div>
+          <div class="link-name">${link.name}</div>
+          <div class="link-desc">${link.desc}</div>
+        `;
+        grid.appendChild(card);
+      });
+    })();
+
+    /* ═══════════════════════════════════════════════════════════
+       SECTION 7: STUDENT SPOTLIGHT (placeholder cards)
+    ═══════════════════════════════════════════════════════════ */
+    (function initSpotlight() {
+      const PLACEHOLDERS = [
+        { category: "Creative Writing", icon: "✍️", text: "Awaiting submissions — could this be your work?" },
+        { category: "Art & Design",     icon: "🎨", text: "Submit your best artwork for a chance to be featured." },
+        { category: "Achievement",      icon: "🏆", text: "Celebrated an achievement recently? Let Mr Lamb know!" }
+      ];
+
+      const grid = document.getElementById("spotlight-grid");
+      PLACEHOLDERS.forEach(p => {
+        const card = document.createElement("div");
+        card.className = "spotlight-card fade-in-up";
+        card.innerHTML = `
+          <div class="spotlight-category">${p.category}</div>
+          <div class="spotlight-placeholder">
+            <div class="spotlight-placeholder-icon">${p.icon}</div>
+            <div class="spotlight-placeholder-text">${p.text}</div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    })();
+
+    /* ═══════════════════════════════════════════════════════════
+       SECTION 8: CHARACTER VALUE OF THE WEEK
+    ═══════════════════════════════════════════════════════════ */
+    (function initCharacterValue() {
+      // Rotate through values 0–6 based on day of year
+      const now     = new Date();
+      const start   = new Date(now.getFullYear(), 0, 0);
+      const diff    = now - start;
+      const oneDay  = 1000 * 60 * 60 * 24;
+      const dayOfYr = Math.floor(diff / oneDay);
+      const weekNum  = Math.floor(dayOfYr / 7);
+      const value    = CHARACTER_VALUES[weekNum % CHARACTER_VALUES.length];
+      document.getElementById("footer-value").textContent = value;
+    })();
+
+  </script>
+</body>
+</html>
