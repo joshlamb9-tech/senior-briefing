@@ -822,6 +822,83 @@
     }
 
     /* ─────────────────────────────────────────────
+       NOTICES TICKER
+    ───────────────────────────────────────────── */
+    .notices-bar {
+      background: var(--dark-green);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 0;
+      overflow: hidden;
+    }
+    .notices-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .notices-label {
+      font-family: 'Arimo', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      white-space: nowrap;
+      border-right: 1px solid var(--border);
+      padding-right: 20px;
+    }
+    .notices-items {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .notice-item {
+      font-family: 'Arimo', sans-serif;
+      font-size: 0.82rem;
+      color: var(--light-sage);
+    }
+
+    /* ─────────────────────────────────────────────
+       ON THIS DAY
+    ───────────────────────────────────────────── */
+    .otd-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 28px 32px;
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+      max-width: 820px;
+    }
+    .otd-year {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+      white-space: nowrap;
+      min-width: 90px;
+    }
+    .otd-text {
+      font-family: 'Arimo', sans-serif;
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      padding-top: 6px;
+    }
+    .otd-no-entry {
+      font-family: 'Arimo', sans-serif;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      opacity: 0.5;
+    }
+
+    /* ─────────────────────────────────────────────
        DIVIDER
     ───────────────────────────────────────────── */
     .section-divider {
@@ -872,6 +949,16 @@
   </header>
 
   <!-- ═══════════════════════════════════════════
+       NOTICES BAR
+  ═══════════════════════════════════════════ -->
+  <div class="notices-bar" id="notices-bar">
+    <div class="notices-inner">
+      <span class="notices-label" id="notices-week-label">Week 10</span>
+      <div class="notices-items" id="notices-items"><!-- populated by JS --></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
        2. COUNTDOWNS
   ═══════════════════════════════════════════ -->
   <section class="section">
@@ -896,6 +983,19 @@
       <div class="week-grid stagger" id="week-grid">
         <!-- Populated by JS -->
       </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- ═══════════════════════════════════════════
+       3b. ON THIS DAY
+  ═══════════════════════════════════════════ -->
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <h2 class="section-title fade-in-up">On This Day</h2>
+      <hr class="section-rule fade-in-up" />
+      <div class="fade-in-up" id="otd-container"><!-- populated by JS --></div>
     </div>
   </section>
 
@@ -1014,12 +1114,32 @@
        Edit the text for each day below.
        Leave "Normal timetable" if nothing special is happening.
     ═══════════════════════════════════════════════════════════ */
+    // ━━━ UPDATE WEEKLY ━━━
+    const WEEK_LABEL = "Week 10 · British Science Week";
+
     const WEEK_AHEAD = {
-      monday:    "Year 8 Speaking Mock Exams begin — JL Classroom &amp; Clock Tower",
-      tuesday:   "Year 8 Speaking Mocks continue | 3J cover lesson",
-      wednesday: "Year 8 Speaking Mocks — final day | 8L, 6T cover lessons",
-      thursday:  "Normal timetable",
-      friday:    "Normal timetable"
+      monday:    "Y7 &amp; Y8 cricket &amp; hockey training 8am · French Lunch 12:55 · Word of the Week: <em>Innovation</em>",
+      tuesday:   "Y8 French Speaking Exams all day (JL Classroom) · Chapel 10:40",
+      wednesday: "Y8 French Speaking Exams — all morning · U13A &amp; U13B Hockey vs Kings Priory (Home) · U13 Girls Netball Festival (Home) · Y7&amp;8 Activities with ES (4pm)",
+      thursday:  "Y7 Boys Hockey Tour departs 11:15 · Y8 Exam results meeting — results embargoed until after · U13A Girls IN2Hockey Regional (Away) · STEM Roadshow 7pm (Harrison Theatre, all welcome)",
+      friday:    "Science Week Assembly — Dr Christoph Oing (oncologist) 8:30 · Senior Pupils Meeting with Mr Hillman &amp; Mr Lamb 11:15 · Y8 Rugby"
+    };
+
+    const WEEK_NOTICES = [
+      { icon: "🔬", text: "British Science Week all week" },
+      { icon: "📖", text: "Word of the Week: <strong>Innovation</strong>" },
+      { icon: "🏠", text: "Home Clothes Day Saturday — Amelie Davy fundraiser" },
+      { icon: "🏒", text: "Y7 Boys Hockey Tour: Thu–Sat" },
+      { icon: "🎺", text: "STEM Roadshow at Harrison Theatre, Thu 7pm — all welcome" }
+    ];
+
+    // ━━━ ON THIS DAY (w/c 9 March) ━━━
+    const ON_THIS_DAY = {
+      "2026-03-09": { year: 1959, text: "The Barbie doll made her public debut at the American International Toy Fair in New York City." },
+      "2026-03-10": { year: 1876, text: "Alexander Graham Bell made the first ever telephone call, saying <em>\"Mr Watson — come here — I want to see you.\"</em>" },
+      "2026-03-11": { year: 2011, text: "A magnitude 9.1 earthquake struck off Japan's coast, triggering a devastating tsunami and the Fukushima nuclear disaster." },
+      "2026-03-12": { year: 1894, text: "Coca-Cola was sold in bottles for the first time, in Vicksburg, Mississippi." },
+      "2026-03-13": { year: 1781, text: "Astronomer William Herschel discovered Uranus — the first planet found using a telescope." }
     };
 
     /* ═══════════════════════════════════════════════════════════
@@ -1311,6 +1431,41 @@
         `;
         grid.appendChild(card);
       });
+    })();
+
+    /* ═══════════════════════════════════════════════════════════
+       NOTICES BAR
+    ═══════════════════════════════════════════════════════════ */
+    (function initNotices() {
+      document.getElementById("notices-week-label").textContent = WEEK_LABEL;
+      const container = document.getElementById("notices-items");
+      WEEK_NOTICES.forEach(n => {
+        const span = document.createElement("span");
+        span.className = "notice-item";
+        span.innerHTML = `${n.icon} ${n.text}`;
+        container.appendChild(span);
+      });
+    })();
+
+    /* ═══════════════════════════════════════════════════════════
+       SECTION 3b: ON THIS DAY
+    ═══════════════════════════════════════════════════════════ */
+    (function initOnThisDay() {
+      const container = document.getElementById("otd-container");
+      const d = new Date();
+      const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+      const entry = ON_THIS_DAY[key];
+      if (entry) {
+        const card = document.createElement("div");
+        card.className = "otd-card";
+        card.innerHTML = `
+          <div class="otd-year">${entry.year}</div>
+          <div class="otd-text">${entry.text}</div>
+        `;
+        container.appendChild(card);
+      } else {
+        container.innerHTML = `<p class="otd-no-entry">No entry for today — check back tomorrow.</p>`;
+      }
     })();
 
     /* ═══════════════════════════════════════════════════════════
