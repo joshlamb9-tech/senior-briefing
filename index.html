@@ -1001,42 +1001,29 @@
       overflow: hidden;
     }
     .dm-overlay.active { display: flex; }
+
+    /* Header */
     .dm-header {
       background: var(--green);
       color: #fff;
-      padding: 12px 28px;
+      padding: 10px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-shrink: 0;
       gap: 16px;
     }
-    .dm-header-left { display: flex; flex-direction: column; gap: 2px; }
-    .dm-header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
-    .dm-h-title {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: 1.3rem;
-      font-weight: 900;
-      letter-spacing: 0.06em;
-    }
-    .dm-h-date {
-      font-size: 0.68rem;
-      color: var(--gold);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-    .dm-h-week {
-      font-size: 0.65rem;
-      color: var(--gold);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
+    .dm-header-left  { display: flex; flex-direction: column; gap: 1px; }
+    .dm-header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
+    .dm-h-title { font-family: 'Playfair Display', Georgia, serif; font-size: 1.2rem; font-weight: 900; letter-spacing: 0.06em; }
+    .dm-h-date  { font-size: 0.65rem; color: var(--gold); letter-spacing: 0.1em; text-transform: uppercase; }
+    .dm-h-week  { font-size: 0.62rem; color: var(--gold); letter-spacing: 0.1em; text-transform: uppercase; }
     .dm-exit-btn {
       background: rgba(255,255,255,0.1);
       border: 1px solid rgba(255,255,255,0.3);
       color: #fff;
       font-family: 'Arimo', sans-serif;
-      font-size: 0.68rem;
+      font-size: 0.65rem;
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
@@ -1046,134 +1033,216 @@
       transition: background var(--transition);
     }
     .dm-exit-btn:hover { background: rgba(255,255,255,0.22); }
+
+    /* Body */
     .dm-body {
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 14px;
-      padding: 18px 28px;
+      gap: 10px;
+      padding: 12px 22px;
       overflow: hidden;
+      min-height: 0;
     }
-    /* Today panel */
+
+    /* Row 1: Today + Prep */
+    .dm-row-top {
+      display: flex;
+      gap: 10px;
+      flex-shrink: 0;
+    }
     .dm-today-panel {
+      flex: 2;
       background: var(--green);
       color: #fff;
       border-radius: 10px;
-      padding: 20px 28px;
+      padding: 14px 22px;
       display: flex;
-      gap: 24px;
+      gap: 20px;
       align-items: center;
-      flex-shrink: 0;
     }
     .dm-today-day {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-size: clamp(1.3rem, 2.5vw, 2rem);
       font-weight: 900;
       color: var(--gold);
       white-space: nowrap;
-      min-width: 120px;
+      min-width: 110px;
     }
-    .dm-today-divider {
-      width: 2px;
-      background: rgba(207,173,107,0.35);
-      align-self: stretch;
-      flex-shrink: 0;
-    }
-    .dm-today-content {
-      font-size: clamp(0.9rem, 1.6vw, 1.08rem);
-      line-height: 1.65;
-      color: rgba(255,255,255,0.92);
-    }
-    .dm-today-empty { font-style: italic; opacity: 0.5; }
-    /* Middle row */
-    .dm-middle {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
+    .dm-today-divider { width: 2px; background: rgba(207,173,107,0.35); align-self: stretch; flex-shrink: 0; }
+    .dm-today-content { font-size: clamp(0.82rem, 1.4vw, 1rem); line-height: 1.6; color: rgba(255,255,255,0.92); }
+    .dm-today-empty   { font-style: italic; opacity: 0.5; }
+    .dm-prep-panel {
       flex: 1;
-      min-height: 0;
-    }
-    .dm-card {
+      background: var(--gold);
+      color: #2a1f00;
       border-radius: 10px;
-      padding: 20px 24px;
+      padding: 14px 18px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      overflow: hidden;
+      justify-content: center;
+      gap: 6px;
     }
-    .dm-card-eyebrow {
-      font-size: 0.6rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      font-weight: 700;
-      opacity: 0.65;
+    .dm-prep-label   { font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; opacity: 0.65; }
+    .dm-prep-content { font-family: 'Playfair Display', serif; font-size: clamp(0.88rem, 1.5vw, 1.1rem); font-weight: 600; line-height: 1.4; }
+    .dm-prep-none    { font-style: italic; opacity: 0.55; font-size: 0.85rem; font-family: 'Arimo', sans-serif; }
+
+    /* Row 2: Sign-in + Right column */
+    .dm-row-middle {
+      flex: 1;
+      display: flex;
+      gap: 10px;
+      min-height: 0;
     }
-    .dm-card-icon  { font-size: 1.6rem; line-height: 1; }
-    .dm-card-name  {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: clamp(1.3rem, 2.5vw, 1.9rem);
-      font-weight: 700;
-      line-height: 1.1;
-    }
-    .dm-card-tagline {
-      font-size: 0.84rem;
-      font-style: italic;
-      font-weight: 600;
-      opacity: 0.85;
-      line-height: 1.4;
-    }
-    .dm-card-desc { font-size: 0.78rem; line-height: 1.5; opacity: 0.75; }
-    .dm-compass-wonder   { background: #2d1b4e; color: #e8d9ff; }
-    .dm-compass-navigate { background: #00534c; color: #d4ede9; }
-    .dm-compass-engage   { background: #7a3e00; color: #ffe8cc; }
-    .dm-compass-strive   { background: #81001C; color: #ffd9e0; }
-    .dm-char-card {
-      background: var(--card-bg);
-      color: var(--text);
-      border-left: 5px solid var(--gold);
-      box-shadow: var(--shadow);
-    }
-    .dm-char-card .dm-card-name     { color: var(--green); }
-    .dm-char-card .dm-card-eyebrow  { color: var(--sage); }
-    .dm-char-card .dm-card-tagline  { color: var(--sage); font-style: italic; }
-    /* Bottom row */
-    .dm-bottom-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      flex-shrink: 0;
-    }
-    .dm-panel {
+    .dm-signin-panel {
+      flex: 2;
       background: var(--card-bg);
       border-radius: 10px;
-      padding: 16px 20px;
+      padding: 14px 18px;
       box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      overflow: hidden;
+      min-height: 0;
+    }
+    .dm-signin-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      flex-shrink: 0;
+    }
+    .dm-signin-title { font-family: 'Playfair Display', serif; font-size: 0.92rem; font-weight: 700; color: var(--green); }
+    .dm-form-tabs { display: flex; gap: 5px; }
+    .dm-form-tab {
+      background: #f0f4f3;
+      border: 2px solid transparent;
+      color: var(--sage);
+      font-family: 'Arimo', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 4px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .dm-form-tab:hover  { border-color: var(--green); color: var(--green); }
+    .dm-form-tab.active { background: var(--green); color: #fff; border-color: var(--green); }
+    .dm-signin-count { font-size: 0.72rem; color: var(--light-sage); font-weight: 600; margin-left: auto; }
+    .dm-signin-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      overflow-y: auto;
+      flex: 1;
+      align-content: flex-start;
+    }
+    .dm-signin-btn {
+      background: #f0f4f3;
+      border: 2px solid #dde5e3;
+      color: var(--text);
+      font-family: 'Arimo', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 9px 15px;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      min-width: 70px;
+      text-align: center;
+    }
+    .dm-signin-btn:hover   { border-color: var(--green); }
+    .dm-signin-btn.present { background: var(--green); color: #fff; border-color: var(--green); }
+
+    /* Right column */
+    .dm-right-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      overflow: hidden;
+      min-width: 0;
+    }
+
+    /* Ready Check (checklist) */
+    .dm-checklist-panel {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 12px 16px;
+      box-shadow: var(--shadow);
+      flex-shrink: 0;
     }
     .dm-panel-title {
       font-family: 'Playfair Display', Georgia, serif;
       font-size: 0.88rem;
       font-weight: 700;
       color: var(--green);
-      margin-bottom: 10px;
-      letter-spacing: 0.02em;
+      margin-bottom: 8px;
     }
-    .dm-house-row {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
+    .dm-checklist { display: flex; flex-direction: column; gap: 6px; }
+    .dm-check-item {
+      display: flex;
+      align-items: center;
       gap: 10px;
+      cursor: pointer;
+      padding: 7px 10px;
+      border-radius: 7px;
+      border: 2px solid #eee;
+      transition: all 0.15s ease;
+      user-select: none;
     }
+    .dm-check-item:hover   { border-color: var(--green); }
+    .dm-check-item.checked { background: #f0f9f7; border-color: var(--green); }
+    .dm-check-box {
+      width: 20px; height: 20px;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.15s ease;
+      font-size: 0.8rem;
+    }
+    .dm-check-item.checked .dm-check-box { background: var(--green); border-color: var(--green); color: #fff; }
+    .dm-check-icon  { font-size: 1rem; }
+    .dm-check-label { font-size: 0.82rem; font-weight: 600; color: var(--text); }
+
+    /* Compass + Character cards in right col */
+    .dm-card {
+      border-radius: 10px;
+      padding: 14px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+      overflow: hidden;
+      min-height: 0;
+    }
+    .dm-card-eyebrow  { font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; opacity: 0.65; }
+    .dm-card-icon     { font-size: 1.4rem; line-height: 1; }
+    .dm-card-name     { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.1rem, 2vw, 1.6rem); font-weight: 700; line-height: 1.1; }
+    .dm-card-tagline  { font-size: 0.78rem; font-style: italic; font-weight: 600; opacity: 0.85; line-height: 1.4; }
+    .dm-compass-wonder   { background: #2d1b4e; color: #e8d9ff; }
+    .dm-compass-navigate { background: #00534c; color: #d4ede9; }
+    .dm-compass-engage   { background: #7a3e00; color: #ffe8cc; }
+    .dm-compass-strive   { background: #81001C; color: #ffd9e0; }
+    .dm-char-card { background: var(--card-bg); color: var(--text); border-left: 5px solid var(--gold); box-shadow: var(--shadow); }
+    .dm-char-card .dm-card-name    { color: var(--green); }
+    .dm-char-card .dm-card-eyebrow { color: var(--sage); }
+
+    /* Row 3: House + Notices */
+    .dm-bottom-row { display: flex; gap: 10px; flex-shrink: 0; }
+    .dm-panel { flex: 1; background: var(--card-bg); border-radius: 10px; padding: 12px 18px; box-shadow: var(--shadow); }
+    .dm-house-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; }
     .dm-house-item { text-align: center; }
-    .dm-house-form {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.25rem;
-      font-weight: 900;
-      color: var(--green);
-    }
-    .dm-house-pts { font-size: 1rem; font-weight: 700; color: var(--text); }
-    .dm-house-bar { height: 5px; background: #eee; border-radius: 3px; margin-top: 5px; overflow: hidden; }
+    .dm-house-form { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 900; color: var(--green); }
+    .dm-house-pts  { font-size: 0.95rem; font-weight: 700; color: var(--text); }
+    .dm-house-bar  { height: 4px; background: #eee; border-radius: 3px; margin-top: 4px; overflow: hidden; }
     .dm-house-bar-fill { height: 100%; background: linear-gradient(90deg, var(--green), var(--sage)); border-radius: 3px; }
-    .dm-notice-list { display: flex; flex-direction: column; gap: 6px; }
-    .dm-notice-item { font-size: 0.8rem; color: var(--text); line-height: 1.4; }
+    .dm-notice-list  { display: flex; flex-direction: column; gap: 5px; }
+    .dm-notice-item  { font-size: 0.78rem; color: var(--text); line-height: 1.4; }
 
     /* ─────────────────────────────────────────────
        RESPONSIVE
@@ -1413,28 +1482,55 @@
       </div>
     </div>
     <div class="dm-body">
-      <!-- Today panel -->
-      <div class="dm-today-panel">
-        <div class="dm-today-day" id="dm-today-day">—</div>
-        <div class="dm-today-divider"></div>
-        <div class="dm-today-content" id="dm-today-content"></div>
+
+      <!-- Row 1: Today's events + Prep tonight -->
+      <div class="dm-row-top">
+        <div class="dm-today-panel">
+          <div class="dm-today-day" id="dm-today-day">—</div>
+          <div class="dm-today-divider"></div>
+          <div class="dm-today-content" id="dm-today-content"></div>
+        </div>
+        <div class="dm-prep-panel">
+          <div class="dm-prep-label">📚 Prep Tonight</div>
+          <div class="dm-prep-content" id="dm-prep-content"></div>
+        </div>
       </div>
-      <!-- Compass + Character -->
-      <div class="dm-middle">
-        <div class="dm-card" id="dm-compass-card"><!-- JS --></div>
-        <div class="dm-card dm-char-card" id="dm-char-card"><!-- JS --></div>
+
+      <!-- Row 2: Sign-in + Right column -->
+      <div class="dm-row-middle">
+        <div class="dm-signin-panel">
+          <div class="dm-signin-top">
+            <div class="dm-signin-title">Register</div>
+            <div class="dm-form-tabs" id="dm-form-tabs"></div>
+            <div class="dm-signin-count" id="dm-signin-count"></div>
+          </div>
+          <div class="dm-signin-grid" id="dm-signin-grid"></div>
+        </div>
+        <div class="dm-right-col">
+          <!-- Ready Check -->
+          <div class="dm-checklist-panel">
+            <div class="dm-panel-title">Ready Check</div>
+            <div class="dm-checklist" id="dm-checklist"></div>
+          </div>
+          <!-- Compass Point -->
+          <div class="dm-card" id="dm-compass-card"></div>
+          <!-- Character Value -->
+          <div class="dm-card dm-char-card" id="dm-char-card"></div>
+        </div>
       </div>
-      <!-- House Points + Notices -->
+
+      <!-- Row 3: House Points + Notices -->
       <div class="dm-bottom-row">
         <div class="dm-panel">
           <div class="dm-panel-title">House Points by Form</div>
-          <div class="dm-house-row" id="dm-house-row"><!-- JS --></div>
+          <div class="dm-house-row" id="dm-house-row"></div>
         </div>
         <div class="dm-panel">
           <div class="dm-panel-title" id="dm-notices-label">Notices</div>
-          <div class="dm-notice-list" id="dm-notice-list"><!-- JS --></div>
+          <div class="dm-notice-list" id="dm-notice-list"></div>
         </div>
       </div>
+
     </div>
   </div>
 
@@ -1457,6 +1553,30 @@
       tagline: "Be curious. Ask questions. Explore the unknown.",
       desc:    "Curiosity sits at the core of learning. Don't just accept the first answer — dig deeper, ask why, and embrace what you don't yet understand.",
       icon:    "✦"
+    };
+
+    /* ═══════════════════════════════════════════════════════════
+       ━━━ UPDATE WEEKLY: Prep Tonight ━━━
+       Set what prep is due for each evening.
+       Leave blank ("") if no prep that night.
+    ═══════════════════════════════════════════════════════════ */
+    const TONIGHT_PREP = {
+      monday:    "",
+      tuesday:   "",
+      wednesday: "",
+      thursday:  "",
+      friday:    ""
+    };
+
+    /* ═══════════════════════════════════════════════════════════
+       ━━━ STATIC CONFIG: Form Students ━━━
+       Update if pupils join or leave during the year.
+    ═══════════════════════════════════════════════════════════ */
+    const FORM_STUDENTS = {
+      "7S": ["Barron","Alfie","Henry","Oliver","Hazell","Guy","Archie","Lettice","Francesca","Hugo"],
+      "7M": ["Ben","Catherine","Monty","Charlie","Harry","Ava","Sami","Rory","Emma"],
+      "8L": ["George","Matilda","Archie","Alice","Isaac","Orla","Walter","Amelie","Isla","Flora","Henry","Fredrik","Martha","Edwin"],
+      "8S": ["Raffy","Hugo","Thomas","Molly","Tasha","Louis","Ben","Darcey Bella","Cecilia","Sofia","Arthur","Aishpreet","Edward"]
     };
 
     const WEEK_AHEAD = {
@@ -2214,12 +2334,15 @@
     /* ═══════════════════════════════════════════════════════════
        DISPLAY MODE
     ═══════════════════════════════════════════════════════════ */
+
+    let dmActiveForm = Object.keys(FORM_STUDENTS)[0]; // default to first form
+
     function enterDisplayMode() {
       const overlay = document.getElementById("dm-overlay");
       const DAY_KEYS  = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];
       const DAY_NAMES = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-      const now     = new Date();
-      const dayIdx  = now.getDay();
+      const now    = new Date();
+      const dayIdx = now.getDay();
 
       // Header
       document.getElementById("dm-date").textContent = formatDate(now).toUpperCase();
@@ -2231,35 +2354,34 @@
       const todayContent = WEEK_AHEAD[todayKey];
       document.getElementById("dm-today-day").textContent = todayName;
       const contentEl = document.getElementById("dm-today-content");
-      if (todayContent) {
-        contentEl.innerHTML = todayContent;
-      } else {
-        contentEl.innerHTML = '<span class="dm-today-empty">No scheduled events — normal timetable.</span>';
-      }
+      contentEl.innerHTML = todayContent
+        ? todayContent
+        : '<span class="dm-today-empty">Normal timetable — no scheduled events.</span>';
+
+      // Prep tonight
+      const prepEl    = document.getElementById("dm-prep-content");
+      const prepToday = TONIGHT_PREP[todayKey];
+      prepEl.innerHTML = prepToday
+        ? prepToday
+        : '<span class="dm-prep-none">No prep set for tonight.</span>';
 
       // Compass card
-      const compassColours = {
-        wonder:   "dm-compass-wonder",
-        navigate: "dm-compass-navigate",
-        engage:   "dm-compass-engage",
-        strive:   "dm-compass-strive"
-      };
+      const compassColours = { wonder:"dm-compass-wonder", navigate:"dm-compass-navigate", engage:"dm-compass-engage", strive:"dm-compass-strive" };
       const compassClass = compassColours[COMPASS_POINT.name.toLowerCase()] || "dm-compass-wonder";
       const dcc = document.getElementById("dm-compass-card");
       dcc.className = "dm-card " + compassClass;
       dcc.innerHTML = `
-        <div class="dm-card-eyebrow">Compass Point of the Week</div>
+        <div class="dm-card-eyebrow">Compass Point</div>
         <div class="dm-card-icon">${COMPASS_POINT.icon}</div>
         <div class="dm-card-name">${COMPASS_POINT.name}</div>
         <div class="dm-card-tagline">${COMPASS_POINT.tagline}</div>
-        <div class="dm-card-desc">${COMPASS_POINT.desc}</div>
       `;
 
       // Character card
       const cv = getCurrentCharValue();
       const dcv = document.getElementById("dm-char-card");
       dcv.innerHTML = `
-        <div class="dm-card-eyebrow">Character Value of the Week</div>
+        <div class="dm-card-eyebrow">Character Value</div>
         <div class="dm-card-icon">✦</div>
         <div class="dm-card-name">${cv.name}</div>
         <div class="dm-card-tagline">${cv.desc}</div>
@@ -2282,7 +2404,7 @@
       });
 
       // Notices
-      document.getElementById("dm-notices-label").textContent = WEEK_LABEL + " — Notices";
+      document.getElementById("dm-notices-label").textContent = "Notices";
       const noticeList = document.getElementById("dm-notice-list");
       noticeList.innerHTML = "";
       WEEK_NOTICES.forEach(n => {
@@ -2292,10 +2414,88 @@
         noticeList.appendChild(item);
       });
 
+      // Form tabs
+      const tabsEl = document.getElementById("dm-form-tabs");
+      tabsEl.innerHTML = "";
+      Object.keys(FORM_STUDENTS).forEach(form => {
+        const btn = document.createElement("button");
+        btn.className = "dm-form-tab" + (form === dmActiveForm ? " active" : "");
+        btn.textContent = form;
+        btn.onclick = () => { dmActiveForm = form; renderDmSignIn(); renderDmTabs(); };
+        tabsEl.appendChild(btn);
+      });
+
+      // Ready Check
+      renderDmChecklist();
+
+      // Sign-in
+      renderDmSignIn();
+
       overlay.classList.add("active");
       if (document.documentElement.requestFullscreen) {
         document.documentElement.requestFullscreen().catch(() => {});
       }
+    }
+
+    function renderDmTabs() {
+      document.querySelectorAll(".dm-form-tab").forEach(btn => {
+        btn.classList.toggle("active", btn.textContent === dmActiveForm);
+      });
+    }
+
+    function renderDmSignIn() {
+      const students = FORM_STUDENTS[dmActiveForm] || [];
+      const today    = new Date().toISOString().split("T")[0];
+      const key      = `dm-signin-${dmActiveForm}-${today}`;
+      const present  = new Set(JSON.parse(localStorage.getItem(key) || "[]"));
+
+      const grid = document.getElementById("dm-signin-grid");
+      grid.innerHTML = "";
+      students.forEach(name => {
+        const btn = document.createElement("button");
+        btn.className = "dm-signin-btn" + (present.has(name) ? " present" : "");
+        btn.textContent = name;
+        btn.onclick = () => {
+          const p2 = new Set(JSON.parse(localStorage.getItem(key) || "[]"));
+          if (p2.has(name)) { p2.delete(name); } else { p2.add(name); }
+          localStorage.setItem(key, JSON.stringify([...p2]));
+          renderDmSignIn();
+        };
+        grid.appendChild(btn);
+      });
+
+      document.getElementById("dm-signin-count").textContent =
+        `${present.size} / ${students.length} present`;
+    }
+
+    function renderDmChecklist() {
+      const ITEMS = [
+        { icon: "📚", label: "Reading book" },
+        { icon: "💻", label: "Charged Chromebook" },
+        { icon: "🖊",  label: "Pencil case with blue pen" }
+      ];
+      const today = new Date().toISOString().split("T")[0];
+      const key   = `dm-checklist-${today}`;
+      const done  = new Set(JSON.parse(localStorage.getItem(key) || "[]"));
+
+      const el = document.getElementById("dm-checklist");
+      el.innerHTML = "";
+      ITEMS.forEach(item => {
+        const row = document.createElement("div");
+        row.className = "dm-check-item" + (done.has(item.label) ? " checked" : "");
+        row.innerHTML = `
+          <div class="dm-check-box">${done.has(item.label) ? "✓" : ""}</div>
+          <span class="dm-check-icon">${item.icon}</span>
+          <span class="dm-check-label">${item.label}</span>
+        `;
+        row.onclick = () => {
+          const d2 = new Set(JSON.parse(localStorage.getItem(key) || "[]"));
+          if (d2.has(item.label)) { d2.delete(item.label); } else { d2.add(item.label); }
+          localStorage.setItem(key, JSON.stringify([...d2]));
+          renderDmChecklist();
+        };
+        el.appendChild(row);
+      });
     }
 
     function exitDisplayMode() {
