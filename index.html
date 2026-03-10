@@ -1116,6 +1116,128 @@
     .dm-notice-list { display: flex; flex-direction: column; gap: 5px; }
     .dm-notice-item { font-size: 0.76rem; color: var(--text); line-height: 1.4; }
 
+    /* Quiz panel — fills remaining left-col space */
+    .dm-quiz-panel {
+      flex: 1;
+      background: #0e2d28;
+      border-radius: 10px;
+      padding: 14px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      overflow: hidden;
+      min-height: 0;
+    }
+    .dm-quiz-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .dm-quiz-label {
+      font-size: 0.58rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: rgba(207,173,107,0.75);
+    }
+    .dm-quiz-badge {
+      font-size: 0.62rem;
+      font-weight: 700;
+      color: #fff;
+      background: rgba(255,255,255,0.15);
+      border-radius: 4px;
+      padding: 2px 7px;
+      letter-spacing: 0.04em;
+    }
+    .dm-quiz-progress {
+      margin-left: auto;
+      font-size: 0.6rem;
+      color: rgba(255,255,255,0.4);
+      font-weight: 600;
+    }
+    .dm-quiz-q {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(0.88rem, 1.5vw, 1.15rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.35;
+      flex-shrink: 0;
+    }
+    .dm-quiz-opts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px;
+      flex: 1;
+      align-content: flex-start;
+    }
+    .dm-quiz-opt {
+      background: rgba(255,255,255,0.08);
+      border: 2px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.92);
+      font-family: 'Arimo', sans-serif;
+      font-size: clamp(0.72rem, 1.2vw, 0.88rem);
+      font-weight: 600;
+      padding: 10px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      line-height: 1.3;
+    }
+    .dm-quiz-opt:hover:not(:disabled) {
+      background: rgba(255,255,255,0.14);
+      border-color: rgba(207,173,107,0.6);
+    }
+    .dm-quiz-opt .dm-opt-letter {
+      background: rgba(255,255,255,0.15);
+      border-radius: 4px;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .dm-quiz-opt.correct { background: #1a5c3a; border-color: #4caf7a; color: #fff; }
+    .dm-quiz-opt.correct .dm-opt-letter { background: #4caf7a; }
+    .dm-quiz-opt.wrong   { background: #5c1a1a; border-color: #c0392b; color: #fff; }
+    .dm-quiz-opt.wrong   .dm-opt-letter { background: #c0392b; }
+    .dm-quiz-opt:disabled { cursor: default; }
+    .dm-quiz-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .dm-quiz-fb {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.75);
+      flex: 1;
+    }
+    .dm-quiz-next {
+      background: var(--gold);
+      color: #2a1f00;
+      border: none;
+      border-radius: 6px;
+      font-family: 'Arimo', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 7px 14px;
+      cursor: pointer;
+      display: none;
+      transition: opacity 0.15s;
+    }
+    .dm-quiz-next:hover { opacity: 0.88; }
+    .dm-quiz-next.visible { display: inline-block; }
+
     /* RIGHT: tutor panel */
     .dm-right-col {
       flex: 1;
@@ -1492,6 +1614,21 @@
         <div class="dm-values-row">
           <div class="dm-card" id="dm-compass-card"></div>
           <div class="dm-card dm-char-card" id="dm-char-card"></div>
+        </div>
+
+        <!-- Challenge Question -->
+        <div class="dm-quiz-panel" id="dm-quiz-panel">
+          <div class="dm-quiz-eyebrow">
+            <span class="dm-quiz-label">Challenge Question</span>
+            <span class="dm-quiz-badge" id="dm-quiz-badge"></span>
+            <span class="dm-quiz-progress" id="dm-quiz-progress"></span>
+          </div>
+          <div class="dm-quiz-q" id="dm-quiz-q"></div>
+          <div class="dm-quiz-opts" id="dm-quiz-opts"></div>
+          <div class="dm-quiz-footer">
+            <div class="dm-quiz-fb" id="dm-quiz-fb"></div>
+            <button class="dm-quiz-next" id="dm-quiz-next">Next →</button>
+          </div>
         </div>
 
         <!-- House Points + Notices side by side -->
@@ -2435,6 +2572,9 @@
       // Sign-in
       renderDmSignIn();
 
+      // Challenge Quiz
+      initDmQuiz();
+
       overlay.classList.add("active");
       if (document.documentElement.requestFullscreen) {
         document.documentElement.requestFullscreen().catch(() => {});
@@ -2499,6 +2639,67 @@
           renderDmChecklist();
         };
         el.appendChild(row);
+      });
+    }
+
+    /* ── Display Mode Quiz ── */
+    let dmQuizQuestions = [];
+    let dmQuizCurrent   = 0;
+    let dmQuizAnswered  = false;
+
+    function initDmQuiz() {
+      const seed      = dateSeed();
+      const shuffled  = seededShuffle(QUESTION_BANK, seed);
+      dmQuizQuestions = shuffled.slice(0, 5);
+      dmQuizCurrent   = 0;
+      dmQuizAnswered  = false;
+      renderDmQuizQuestion();
+
+      const nextBtn = document.getElementById("dm-quiz-next");
+      nextBtn.onclick = () => {
+        dmQuizCurrent = (dmQuizCurrent + 1) % dmQuizQuestions.length;
+        dmQuizAnswered = false;
+        renderDmQuizQuestion();
+      };
+    }
+
+    function renderDmQuizQuestion() {
+      const q = dmQuizQuestions[dmQuizCurrent];
+      const total = dmQuizQuestions.length;
+
+      const badge = document.getElementById("dm-quiz-badge");
+      badge.textContent = q.subject;
+      badge.style.background = SUBJECT_COLOURS[q.subject] || "#333";
+
+      document.getElementById("dm-quiz-progress").textContent =
+        `${dmQuizCurrent + 1} / ${total}`;
+      document.getElementById("dm-quiz-q").textContent = q.q;
+      document.getElementById("dm-quiz-fb").textContent = "";
+      document.getElementById("dm-quiz-next").classList.remove("visible");
+
+      const opts = document.getElementById("dm-quiz-opts");
+      opts.innerHTML = "";
+      const letters = ["A","B","C","D"];
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement("button");
+        btn.className = "dm-quiz-opt";
+        btn.innerHTML = `<span class="dm-opt-letter">${letters[idx]}</span>${opt}`;
+        btn.addEventListener("click", () => {
+          if (dmQuizAnswered) return;
+          dmQuizAnswered = true;
+          opts.querySelectorAll(".dm-quiz-opt").forEach(b => b.disabled = true);
+          if (idx === q.answer) {
+            btn.classList.add("correct");
+            document.getElementById("dm-quiz-fb").textContent = "✓ Correct!";
+          } else {
+            btn.classList.add("wrong");
+            opts.querySelectorAll(".dm-quiz-opt")[q.answer].classList.add("correct");
+            document.getElementById("dm-quiz-fb").textContent =
+              `✗ Answer: ${q.options[q.answer]}`;
+          }
+          document.getElementById("dm-quiz-next").classList.add("visible");
+        });
+        opts.appendChild(btn);
       });
     }
 
