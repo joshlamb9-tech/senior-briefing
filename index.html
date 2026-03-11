@@ -1231,7 +1231,9 @@
       grid-template-columns: 1fr 1fr;
       gap: 7px;
       flex: 1;
+      min-height: 0;
       align-content: flex-start;
+      overflow: hidden;
     }
     .dm-quiz-opt {
       background: rgba(255,255,255,0.08);
@@ -1271,12 +1273,13 @@
     .dm-quiz-opt.wrong   { background: #5c1a1a; border-color: #c0392b; color: #fff; }
     .dm-quiz-opt.wrong   .dm-opt-letter { background: #c0392b; }
     .dm-quiz-opt:disabled { cursor: default; }
-    .dm-quiz-footer { margin-top: auto;
+    .dm-quiz-footer {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 8px;
       flex-shrink: 0;
+      padding-top: 4px;
     }
     .dm-quiz-fb {
       font-size: 0.78rem;
