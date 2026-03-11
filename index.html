@@ -343,8 +343,17 @@
     .day-content {
       font-size: 0.82rem;
       color: #444;
-      line-height: 1.5;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
     }
+    .day-event {
+      line-height: 1.4;
+      padding: 2px 0;
+      border-top: 1px solid rgba(0,0,0,0.06);
+    }
+    .day-event:first-child { border-top: none; }
+    .day-card.today .day-event { border-top-color: rgba(255,255,255,0.12); }
 
     /* ─────────────────────────────────────────────
        4. DAILY KNOWLEDGE CHALLENGE
@@ -1111,7 +1120,7 @@
       padding: 14px 22px;
       display: flex;
       gap: 20px;
-      align-items: center;
+      align-items: flex-start;
       flex-shrink: 0;
     }
     .dm-today-day {
@@ -1121,9 +1130,13 @@
       color: var(--gold);
       white-space: nowrap;
       min-width: 110px;
+      padding-top: 2px;
+      flex-shrink: 0;
     }
     .dm-today-divider { width: 2px; background: rgba(207,173,107,0.35); align-self: stretch; flex-shrink: 0; }
-    .dm-today-content { font-size: clamp(0.82rem, 1.4vw, 1rem); line-height: 1.6; color: rgba(255,255,255,0.92); }
+    .dm-today-content { font-size: clamp(0.82rem, 1.4vw, 1rem); color: rgba(255,255,255,0.92); display: flex; flex-direction: column; gap: 3px; justify-content: center; }
+    .dm-today-event { line-height: 1.4; padding: 2px 0; border-top: 1px solid rgba(207,173,107,0.15); }
+    .dm-today-event:first-child { border-top: none; }
     .dm-today-empty   { font-style: italic; opacity: 0.5; }
 
     /* Compass + Character side by side */
@@ -2199,7 +2212,7 @@
           <div class="day-name">
             ${DAY_NAMES[i]}${isToday ? '<span class="day-badge">Today</span>' : ''}
           </div>
-          <div class="day-content">${WEEK_AHEAD[key]}</div>
+          <div class="day-content">${(WEEK_AHEAD[key] || '').split(' · ').map(e => `<div class="day-event">${e}</div>`).join('')}</div>
         `;
         grid.appendChild(card);
       });
@@ -2585,7 +2598,7 @@
       document.getElementById("dm-today-day").textContent = todayName;
       const contentEl = document.getElementById("dm-today-content");
       contentEl.innerHTML = todayContent
-        ? todayContent
+        ? todayContent.split(' · ').map(e => `<div class="dm-today-event">${e}</div>`).join('')
         : '<span class="dm-today-empty">Normal timetable — no scheduled events.</span>';
 
       // Prep tonight
