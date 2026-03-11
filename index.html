@@ -1058,7 +1058,10 @@
       gap: 16px;
     }
     .dm-header-left   { display: flex; flex-direction: column; gap: 2px; }
-    .dm-header-center { display: flex; align-items: center; justify-content: center; }
+    .dm-header-center { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; }
+    .dm-h-countdown { font-size: 0.68rem; color: var(--gold); letter-spacing: 0.09em; text-transform: uppercase; font-weight: 600; opacity: 0.9; min-height: 1em; }
+    .dm-h-countdown.urgent { color: #ffb347; animation: pulse 1s infinite; }
+    .dm-h-countdown.lesson-now { color: #7dffb3; font-weight: 700; opacity: 1; }
     .dm-header-right  { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
     .dm-h-title { font-family: 'Playfair Display', Georgia, serif; font-size: 1.35rem; font-weight: 900; letter-spacing: 0.06em; }
     .dm-h-date  { font-size: 0.7rem; color: var(--gold); letter-spacing: 0.1em; text-transform: uppercase; }
@@ -1255,7 +1258,7 @@
     .dm-quiz-opt.wrong   { background: #5c1a1a; border-color: #c0392b; color: #fff; }
     .dm-quiz-opt.wrong   .dm-opt-letter { background: #c0392b; }
     .dm-quiz-opt:disabled { cursor: default; }
-    .dm-quiz-footer {
+    .dm-quiz-footer { margin-top: auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -1643,6 +1646,7 @@
       </div>
       <div class="dm-header-center">
         <div class="dm-h-clock" id="dm-clock">00:00</div>
+        <div class="dm-h-countdown" id="dm-lesson-countdown"></div>
       </div>
       <div class="dm-header-right">
         <div class="dm-h-week" id="dm-week"></div>
@@ -2531,12 +2535,33 @@
     let dmActiveForm = Object.keys(FORM_STUDENTS)[0]; // default to first form
     let dmClockInterval = null;
 
+    const LESSON_1_HOUR = 8, LESSON_1_MIN = 35; // Lesson 1 start time — update if timetable changes
+
     function startDmClock() {
       function tick() {
         const n = new Date();
         const h = String(n.getHours()).padStart(2,'0');
         const m = String(n.getMinutes()).padStart(2,'0');
         document.getElementById("dm-clock").textContent = `${h}:${m}`;
+
+        // Lesson 1 countdown
+        const cdEl = document.getElementById("dm-lesson-countdown");
+        const nowSecs = n.getHours() * 3600 + n.getMinutes() * 60 + n.getSeconds();
+        const l1Secs  = LESSON_1_HOUR * 3600 + LESSON_1_MIN * 60;
+        const diff    = l1Secs - nowSecs;
+
+        if (diff > 0 && diff <= 1800) {            // up to 30 min before: show countdown
+          const mins = Math.floor(diff / 60);
+          const secs = diff % 60;
+          cdEl.textContent = `Lesson 1 in ${mins}:${String(secs).padStart(2,'0')}`;
+          cdEl.className = 'dm-h-countdown' + (diff <= 60 ? ' urgent' : '');
+        } else if (diff <= 0 && diff > -2400) {    // during Lesson 1 (40 min): show in green
+          cdEl.textContent = 'Now in Lesson 1';
+          cdEl.className = 'dm-h-countdown lesson-now';
+        } else {
+          cdEl.textContent = '';
+          cdEl.className = 'dm-h-countdown';
+        }
       }
       tick();
       dmClockInterval = setInterval(tick, 1000);
