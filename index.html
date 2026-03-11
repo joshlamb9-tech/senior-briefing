@@ -1303,6 +1303,67 @@
     .dm-quiz-next:hover { opacity: 0.88; }
     .dm-quiz-next.visible { display: inline-block; }
 
+    /* Score screen */
+    .dm-quiz-score-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      gap: 10px;
+      text-align: center;
+    }
+    .dm-quiz-score-eyebrow {
+      font-size: 0.58rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: rgba(207,173,107,0.75);
+    }
+    .dm-quiz-score-num {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2.8rem, 5vw, 4rem);
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .dm-quiz-score-denom {
+      font-size: 0.5em;
+      color: rgba(207,173,107,0.6);
+    }
+    .dm-quiz-score-bar {
+      width: 80%;
+      height: 5px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .dm-quiz-score-fill {
+      height: 100%;
+      background: var(--gold);
+      border-radius: 3px;
+      transition: width 0.6s ease;
+    }
+    .dm-quiz-score-msg {
+      font-size: clamp(0.85rem, 1.4vw, 1rem);
+      color: rgba(255,255,255,0.8);
+      font-style: italic;
+    }
+    .dm-quiz-replay {
+      background: transparent;
+      border: 1px solid rgba(207,173,107,0.4);
+      color: var(--gold);
+      font-family: 'Arimo', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 6px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 4px;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .dm-quiz-replay:hover { background: rgba(207,173,107,0.12); border-color: var(--gold); }
+
     /* RIGHT: tutor panel */
     .dm-right-col {
       flex: 1;
@@ -2757,6 +2818,7 @@
     let dmQuizQuestions = [];
     let dmQuizCurrent   = 0;
     let dmQuizAnswered  = false;
+    let dmQuizScore     = 0;
 
     function initDmQuiz() {
       const seed      = dateSeed();
@@ -2764,14 +2826,39 @@
       dmQuizQuestions = shuffled.slice(0, 5);
       dmQuizCurrent   = 0;
       dmQuizAnswered  = false;
+      dmQuizScore     = 0;
       renderDmQuizQuestion();
 
       const nextBtn = document.getElementById("dm-quiz-next");
       nextBtn.onclick = () => {
-        dmQuizCurrent = (dmQuizCurrent + 1) % dmQuizQuestions.length;
-        dmQuizAnswered = false;
-        renderDmQuizQuestion();
+        const isLast = dmQuizCurrent === dmQuizQuestions.length - 1;
+        if (isLast) {
+          showDmQuizScore();
+        } else {
+          dmQuizCurrent++;
+          dmQuizAnswered = false;
+          renderDmQuizQuestion();
+        }
       };
+    }
+
+    function showDmQuizScore() {
+      const total = dmQuizQuestions.length;
+      const score = dmQuizScore;
+      const msgs  = ["Better luck tomorrow!", "Keep practising!", "Not bad!", "Good work!", "Excellent!", "Perfect score! ✦"];
+      const msg   = msgs[Math.min(score, msgs.length - 1)];
+      const pct   = Math.round((score / total) * 100);
+
+      const panel = document.getElementById("dm-quiz-panel");
+      panel.innerHTML = `
+        <div class="dm-quiz-score-screen">
+          <div class="dm-quiz-score-eyebrow">Challenge Question</div>
+          <div class="dm-quiz-score-num">${score}<span class="dm-quiz-score-denom"> / ${total}</span></div>
+          <div class="dm-quiz-score-bar"><div class="dm-quiz-score-fill" style="width:${pct}%"></div></div>
+          <div class="dm-quiz-score-msg">${msg}</div>
+          <button class="dm-quiz-replay" onclick="initDmQuiz()">Play again →</button>
+        </div>
+      `;
     }
 
     function renderDmQuizQuestion() {
@@ -2786,7 +2873,10 @@
         `${dmQuizCurrent + 1} / ${total}`;
       document.getElementById("dm-quiz-q").textContent = q.q;
       document.getElementById("dm-quiz-fb").textContent = "";
-      document.getElementById("dm-quiz-next").classList.remove("visible");
+
+      const nextBtn = document.getElementById("dm-quiz-next");
+      nextBtn.classList.remove("visible");
+      nextBtn.textContent = dmQuizCurrent === total - 1 ? "See score →" : "Next →";
 
       const opts = document.getElementById("dm-quiz-opts");
       opts.innerHTML = "";
@@ -2801,6 +2891,7 @@
           opts.querySelectorAll(".dm-quiz-opt").forEach(b => b.disabled = true);
           if (idx === q.answer) {
             btn.classList.add("correct");
+            dmQuizScore++;
             document.getElementById("dm-quiz-fb").textContent = "✓ Correct!";
           } else {
             btn.classList.add("wrong");
