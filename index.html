@@ -1817,6 +1817,15 @@
     const WEEK_LABEL = "Week 10 · British Science Week";
 
     /* ═══════════════════════════════════════════════════════════
+       ━━━ UPDATE HALF-TERMLY: Character Value ━━━
+       Fixed for the whole half term — update once per half term.
+    ═══════════════════════════════════════════════════════════ */
+    const CHAR_VALUE = {
+      name: "Independent Thinking",
+      desc: "We question, reason, and form our own considered views."
+    };
+
+    /* ═══════════════════════════════════════════════════════════
        ━━━ UPDATE WEEKLY: Compass Point ━━━
        Set name to one of: "Wonder" | "Navigate" | "Engage" | "Strive"
        Update tagline and desc to match the week's focus if desired.
@@ -2557,13 +2566,7 @@
        SECTION 8: CHARACTER VALUE OF THE WEEK
     ═══════════════════════════════════════════════════════════ */
     function getCurrentCharValue() {
-      const now     = new Date();
-      const start   = new Date(now.getFullYear(), 0, 0);
-      const diff    = now - start;
-      const oneDay  = 1000 * 60 * 60 * 24;
-      const dayOfYr = Math.floor(diff / oneDay);
-      const weekNum  = Math.floor(dayOfYr / 7);
-      return CHARACTER_VALUES[weekNum % CHARACTER_VALUES.length];
+      return CHAR_VALUE;
     }
 
     (function initCharacterValue() {
@@ -2598,7 +2601,7 @@
       const cv = getCurrentCharValue();
       const chc = document.getElementById("char-card");
       chc.innerHTML = `
-        <div class="value-card-eyebrow">Character Value of the Week</div>
+        <div class="value-card-eyebrow">Character Value of the Half Term</div>
         <div class="value-card-icon">✦</div>
         <div class="value-card-name">${cv.name}</div>
         <div class="value-card-desc">${cv.desc}</div>
